@@ -5,6 +5,23 @@ Claude workflow. Keep this file concise; deeper procedures live in
 `docs/CODEX_WORKFLOW.md`, `docs/PORTING_MAP.md`, `KNOWLEDGE_BASE.md`,
 `MEMORY.md`, and the repo skills.
 
+## Codex diary breadcrumbs
+
+For any non-trivial Codex work session, leave a short breadcrumb entry under
+repo-root `quality_reports/codex_activity/` before wrap-up, using a filename
+like `YYYY-MM-DD_short-task.md`.
+
+Each breadcrumb should briefly capture:
+
+- what you worked on
+- what changed
+- why it mattered
+- what was verified or left unresolved
+
+Write in plain English. Keep it concise, concrete, and not overly technical.
+These breadcrumbs are collected by the nightly diary automation in
+`jakerbrown.github.io`, so do not leave the only useful summary in chat.
+
 ## Core operating mode
 
 - For any non-trivial task, start with or refresh a plan in

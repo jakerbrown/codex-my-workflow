@@ -1,7 +1,7 @@
 # Plan: twitter integration gap evaluation
 
 - **Date:** 2026-04-08
-- **Status:** IN PROGRESS
+- **Status:** COMPLETED
 - **Owner:** Codex
 - **Quality target:** 90
 
@@ -80,3 +80,24 @@ twitter-repo files.
   - No.
 - Final quality threshold:
   - 90
+
+## Findings summary
+
+- Fully or mostly integrated:
+  - Lightweight root overlay guidance in `AGENTS.md`
+  - Durable `KNOWLEDGE_BASE.md` and `MEMORY.md`
+  - Lightweight `plans/` and `plans/session_logs/`
+  - Startup reading path via `CODEX_START.md`
+- Partial or weak integration:
+  - Specialist review exists only as prose, not as explicit multi-agent mappings
+    or repo-local specialists.
+  - Quality thresholds are present, but not the fuller scoring/governance model
+    used in this repo.
+  - Verification/completion reporting is integrated, but durable review-report
+    surfaces are not.
+- Missing integration features from this repo:
+  - Repo-local `.codex/` infrastructure such as hooks, rules, config, and agent
+    definitions.
+  - Repo-local `.agents/skills/` workflows.
+  - A deeper workflow manual like `docs/CODEX_WORKFLOW.md`.
+  - A scoped adversarial-review rule for high-stakes changes.
