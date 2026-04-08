@@ -48,14 +48,14 @@ def main() -> None:
     if any(re.search(p, lowered) for p in VERIFY_PATTERNS):
         emit(
             "Verification-like command completed. Record the result in the session log or quality report, "
-            "including any warnings, missing outputs, or hard-gate failures."
+            "including warnings, missing outputs, hard-gate failures, the current quality score, and whether specialist review or adversarial QA still needs to run."
         )
         return
 
     if any(re.search(p, lowered) for p in GIT_PATTERNS):
         emit(
             "Git/PR workflow command completed. Make sure the quality threshold, verification summary, "
-            "and relevant reports are all on disk before considering the task finished."
+            "specialist-review status, and relevant reports are all on disk before considering the task finished."
         )
         return
 

@@ -69,7 +69,12 @@ def summarize_context(repo_root: Path, source: str) -> str:
         "For non-trivial work, keep or refresh a plan on disk and write reports to quality_reports/."
     )
     parts.append(
-        "Important: Codex subagents must be spawned explicitly when parallel review is needed."
+        "Default expectation: use specialist review when the task fits the existing reviewer set, "
+        "and use adversarial critic/fixer QA for substantial Beamer/Quarto parity work."
+    )
+    parts.append(
+        "Important: Codex subagents still must be spawned explicitly at runtime when the user wants "
+        "the full workflow; the repo guidance makes this the default expectation, not automatic platform behavior."
     )
 
     if source == "resume":
@@ -91,7 +96,8 @@ def summarize_context(repo_root: Path, source: str) -> str:
 
     parts.append(
         "When working on slide or Quarto tasks, consult the layered AGENTS files plus "
-        "`KNOWLEDGE_BASE.md`, `MEMORY.md`, and `docs/PORTING_MAP.md` if the task touches workflow infrastructure."
+        "`KNOWLEDGE_BASE.md`, `MEMORY.md`, and `docs/PORTING_MAP.md` if the task touches workflow infrastructure. "
+        "Record quality thresholds, review choices, and verification results on disk."
     )
 
     text = "\n\n".join(parts)

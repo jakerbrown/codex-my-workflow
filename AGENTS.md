@@ -22,12 +22,22 @@ Claude workflow. Keep this file concise; deeper procedures live in
 
 ## Parallel work
 
-- Codex does **not** spawn subagents unless explicitly asked.
+- Specialist review is the **default review mode** for non-trivial work that
+  maps cleanly onto the existing reviewer set. Do not default to a single
+  generalist pass when a specialist workflow fits.
+- Codex does **not** spawn subagents unless explicitly asked at runtime, so use
+  the repo skills or explicit delegation language whenever the user wants the
+  full workflow.
 - When a task benefits from parallel review, explicitly spawn the relevant
-  specialist agents and then synthesize their outputs.
+  specialist agents and then synthesize their outputs into a durable report.
 - Prefer the repo skills when they fit:
   - `$slide-excellence`
   - `$qa-quarto`
+- Default specialist mapping:
+  - slides / Quarto: `proofreader`, `slide-auditor`, `pedagogy-reviewer`
+  - R code: `r-reviewer`
+  - domain-substantive artifacts: `domain-reviewer`
+  - paired Beamer / Quarto work: `quarto-critic` and `quarto-fixer`
 
 ## Quality thresholds
 
@@ -38,7 +48,9 @@ Use these thresholds unless the user overrides them:
 - **90** = PR-ready
 - **95** = excellence / aspirational
 
-Below threshold, keep iterating or clearly report what remains.
+Below threshold, keep iterating or clearly report what remains. Treat these as
+blocking thresholds for task completion, commit, and PR readiness rather than
+informal suggestions.
 
 ## Slide and Quarto policy
 
@@ -48,6 +60,9 @@ Below threshold, keep iterating or clearly report what remains.
 - Treat the Beamer source as authoritative when Beamer and Quarto drift.
 - Preserve equations, notation, and citations verbatim unless the task itself is
   to change them.
+- For substantial Beamer / Quarto parity work, adversarial QA is the default
+  review expectation: run the critic / fixer loop unless the task is too small
+  to justify it.
 
 ## Verification expectations
 
@@ -56,7 +71,8 @@ Below threshold, keep iterating or clearly report what remains.
   status against the Beamer source.
 - `scripts/**/*.R`: run the relevant script entry point and confirm expected
   outputs exist.
-- Record what was verified and what was not.
+- Score the result against the relevant threshold and record what was verified
+  and what was not.
 
 ## Infrastructure files
 
@@ -79,6 +95,7 @@ Before declaring a task done, be explicit about:
 
 - what changed
 - what was verified
+- what review agents or QA loops were used, or why they were skipped
 - what reports were written
 - current quality level
 - any remaining drift, blockers, or open questions

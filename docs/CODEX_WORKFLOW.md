@@ -89,9 +89,20 @@ threshold is lower.
 
 ## 5. Parallel specialist review
 
-Codex only spawns subagents when explicitly asked.
+Specialist review is the default review mode in this repository whenever a task
+maps cleanly onto the existing specialist set.
 
-That means the parent agent should say things like:
+Codex only spawns subagents when explicitly asked at runtime.
+
+That means the practical default is:
+
+1. treat specialist review as expected, not optional, for serious work
+2. use a repo skill that already encodes the specialist workflow when possible
+3. otherwise explicitly request the relevant specialist agents in the prompt or
+   plan
+4. synthesize the outputs into a durable report or session-log entry
+
+The parent agent should say things like:
 
 > Spawn `slide-auditor`, `pedagogy-reviewer`, and `proofreader` in parallel on
 > `Quarto/Lecture3.qmd`. Keep them read-only. When all three return, write their
@@ -99,6 +110,23 @@ That means the parent agent should say things like:
 
 Use this pattern whenever the work is naturally separable and the added token
 cost is justified.
+
+### Default specialist mapping
+
+- Slides / Quarto review:
+  - `proofreader`
+  - `slide-auditor`
+  - `pedagogy-reviewer`
+- R / analysis code:
+  - `r-reviewer`
+- Substance / field correctness:
+  - `domain-reviewer`
+- Paired Beamer / Quarto parity work:
+  - `quarto-critic`
+  - `quarto-fixer`
+- End-to-end verification:
+  - `verifier` when the task is important enough to justify a dedicated final
+    pass
 
 ## 6. Adversarial QA pattern
 
@@ -113,6 +141,12 @@ In Codex, the workflow is:
 5. loop until `APPROVED` or the round limit is reached
 
 That pattern is encoded in the `qa-quarto` skill.
+
+For substantial paired Beamer / Quarto work, this adversarial loop should be
+treated as the default QA path rather than an exceptional extra step.
+
+If the task is too small for a full loop, say so explicitly in the summary and
+explain what lighter verification replaced it.
 
 ## 7. Knowledge base maintenance
 
@@ -170,6 +204,15 @@ Recommended defaults:
 These are not laws of nature, but they should be used consistently unless a task
 has a good reason to deviate.
 
+In this repo they function as default decision thresholds:
+
+- below `80`: not ready for normal completion or commit
+- below `90`: not PR-ready
+- `95`: excellence target, not a universal requirement
+
+If a task stops below the relevant threshold, the summary should explain why and
+what remains.
+
 ## 10. Infrastructure verification
 
 Verification should match the kind of change that was made.
@@ -198,7 +241,25 @@ The key rule is that infrastructure changes should not be declared done just
 because they are syntactically valid; they should be checked against the repo's
 actual operating behavior.
 
-## 11. What differs from Claude
+## 11. Context persistence by default
+
+The original Claude workflow relied on a `PreCompact`-style context-preservation
+mechanism. Codex does not expose a true equivalent, so this port makes durable
+on-disk state the default survival mechanism.
+
+Default expectations:
+
+- non-trivial work gets an on-disk plan
+- long or meaningful tasks get a session log
+- important decisions and verification results are written to disk
+- workflow lessons accumulate in `MEMORY.md`
+- stable operating conventions accumulate in `KNOWLEDGE_BASE.md`
+
+This is not a perfect runtime equivalent to Claude's compression lifecycle, but
+it is the default persistence model for this repo and should be treated as part
+of the workflow, not optional documentation.
+
+## 12. What differs from Claude
 
 Three differences matter operationally:
 
@@ -214,11 +275,17 @@ That is useful, but it is not the same as Claude's broader hook/event surface.
 Folder-local `AGENTS.md` files do most of the work that Claude `paths:` rules
 used to do.
 
-## 12. Suggested prompts
+## 13. Suggested prompts
 
 ### General repo initialization
 > Read `AGENTS.md`, `docs/PORTING_MAP.md`, and the existing `.claude/` folder.
 > Propose the next smallest faithful Codex porting step.
+
+### Full default workflow
+> Read `AGENTS.md`, `MEMORY.md`, `KNOWLEDGE_BASE.md`, and the latest plan. Use
+> the full repo workflow by default: durable plan, specialist review where it
+> fits, adversarial QA for substantial Beamer/Quarto parity work, scoring
+> against the repo thresholds, and a durable session-log update.
 
 ### Full slide review
 > Use the `slide-excellence` skill on `Quarto/Lecture1_Topic.qmd`. Spawn the
@@ -233,7 +300,7 @@ used to do.
 > Compare `.claude/skills/proofread` to this Codex starter pack. Draft a Codex
 > repo skill that matches the original intent but uses Codex-native conventions.
 
-## 13. When to consider an external orchestrator
+## 14. When to consider an external orchestrator
 
 Most of the value can be captured with native Codex guidance + skills.
 
