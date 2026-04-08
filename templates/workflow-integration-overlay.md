@@ -21,6 +21,8 @@ Add:
 - durable memory files if missing
 - a clearer completion standard
 - explicit verification and review expectations
+- a default multi-agent review mapping
+- a scoped adversarial-review rule for high-stakes work
 - a durable session-log habit if the repo lacks one
 
 ## Minimal files to add
@@ -70,8 +72,13 @@ otherwise.
 ## Review expectations
 
 - Use the repo's existing specialists when the task maps cleanly onto them.
-- If multiple specialists apply, prefer parallel review when the task is large
-  enough to justify it.
+- If multiple specialists apply, prefer parallel multi-agent review rather than
+  a single generalist pass when the task is large enough to justify it.
+- Keep the repo's existing specialists authoritative; map workflow roles onto
+  them instead of renaming the repo to fit this workflow.
+- Treat the mapping as a workflow default, not an automatic platform feature:
+  explicitly request the relevant specialists when you want the full review
+  pass.
 - If specialist review is skipped, say why in the final summary.
 
 ## Verification expectations
@@ -93,6 +100,38 @@ Before declaring a task done, be explicit about:
 - any remaining blockers, drift, or open questions
 ```
 
+## Default multi-agent mapping
+
+For a research or public-artifact repo such as referenda, start from a
+copy-ready block like this and then replace each role with the repo's actual
+specialists:
+
+```md
+## Default specialist mapping
+
+- Data ingest / transformation / analysis changes: use `[analysis-reviewer]`,
+  `[domain-reviewer]`, and `[verifier]`
+- Result tables / figures / maps / released artifacts: use
+  `[artifact-reviewer]`, `[domain-reviewer]`, and `[verifier]`
+- Workflow / automation / repo-governance changes: use `[workflow-reviewer]`
+  and `[verifier]`
+- Documentation or methods changes that make substantive claims: use
+  `[docs-reviewer]` and `[domain-reviewer]`
+- Exploratory work proposed for promotion into production paths: use
+  `[implementation-reviewer]` and `[verifier]`
+- Final verification: use `[verifier]` or `[repo-standard check suite]`
+```
+
+If a change crosses multiple surfaces, run the relevant specialists in
+parallel and synthesize one durable report instead of treating review as a
+single-role gate.
+
+For referenda-style work, the default expectation is usually:
+
+- one reviewer for implementation correctness
+- one reviewer for substantive election or domain correctness
+- one verification owner for reproducibility, artifact freshness, or command checks
+
 ## Existing-agent mapping table
 
 Add a section like this to `AGENTS.md` or a local workflow doc:
@@ -110,6 +149,58 @@ Add a section like this to `AGENTS.md` or a local workflow doc:
 ```
 
 This lets the methodology transfer even if agent names differ from this repo.
+
+For a referenda-style repo, a practical mapping might look like:
+
+```md
+## Specialist mapping
+
+| Workflow role | Existing repo agent / reviewer | When to use |
+|---|---|---|
+| Analysis-code reviewer | `[analysis-reviewer]` | Data prep, joins, transformations, statistical or tabulation code |
+| Domain reviewer | `[elections-domain-reviewer]` | Ballot-measure logic, jurisdiction rules, interpretive claims |
+| Workflow reviewer | `[workflow-reviewer]` | `AGENTS.md`, automation, release instructions, infra docs |
+| Artifact reviewer | `[artifact-reviewer]` | Tables, figures, maps, exported outputs, public-facing docs |
+| Verifier | `[qa-runner or command suite]` | Repro runs, artifact freshness, smoke checks |
+| Adversarial critic | `[red-team reviewer]` | Scoped high-stakes surfaces |
+| Fixer | `[implementation owner]` | Address critic findings without expanding scope |
+```
+
+## Scoped adversarial-review rule
+
+Adversarial review should be **narrowly scoped**, not globally required.
+
+Use a rule like this in the target repo:
+
+```md
+## High-stakes adversarial review
+
+- Default rule:
+  - Use the repo's standard specialist review path for normal changes.
+- Escalate to an adversarial critic/fixer or red-team/rebuttal pass only when
+  the change is high-stakes.
+- Treat these as high-stakes by default:
+  - transformation logic that can change released counts, classifications, or
+    jurisdiction-level results
+  - methods text, documentation, or release notes tied to published findings or
+    public claims
+  - workflow rules, automation, or verification logic that can silently weaken
+    review, reproducibility, or artifact freshness
+  - release or deployment commands that can overwrite, publish, or invalidate
+    public artifacts
+  - destructive or difficult-to-reverse data migrations, backfills, or archive
+    rewrites
+- If adversarial review is used, record:
+  - why the change qualified as high-stakes
+  - what exact files, commands, or claims were in scope
+  - which critic/reviewer roles were used
+  - what verification or rollback checks were added
+- If the change is important but not high-stakes, use normal multi-agent review
+  plus the repo's narrow verification suite instead of forcing a red-team loop.
+```
+
+This preserves the spirit of adversarial QA without accidentally making every
+routine repo or docs change pay the cost of a heavyweight review loop.
 
 ## Existing-plan integration block
 
@@ -172,6 +263,8 @@ Good early entries:
 
 - where Codex tends to stumble in this repo
 - which existing specialists are most reliable for which tasks
+- which specialist combinations are the default multi-agent review sets
+- which change classes should trigger adversarial review
 - which verification steps are easy to forget
 - what should always be written to disk during longer tasks
 
@@ -182,7 +275,10 @@ Use this when adopting the overlay in a repo:
 - Keep the repo's existing agents and planning docs.
 - Add or update a root `AGENTS.md` with overlay orchestration rules.
 - Document where plans, logs, and reports already live.
-- Map existing agents to workflow roles.
+- Map existing agents to workflow roles and define the default multi-agent
+  review combinations.
+- Define which change classes count as high-stakes enough for adversarial
+  review.
 - Add `KNOWLEDGE_BASE.md` and `MEMORY.md` if missing.
 - Make verification and completion standards explicit.
 - Do one pilot task and refine the overlay from what you learn.
@@ -193,4 +289,6 @@ Use this when adopting the overlay in a repo:
 - Introducing a second planning system when the repo already has one.
 - Copying slide- or domain-specific rules into unrelated repos.
 - Making the overlay so broad that it overrides useful local conventions.
+- Requiring adversarial review for routine changes that only need standard
+  specialist review plus verification.
 - Treating verification or review as optional once implementation is done.

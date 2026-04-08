@@ -11,7 +11,8 @@ For each repo:
 3. Identify the repo's default specialists or review commands.
 4. Identify the narrowest standard verification commands.
 5. Pick the quality threshold.
-6. Drop the copy-ready `AGENTS.md` overlay into the repo and fill in the five fields.
+6. Define which high-stakes changes should escalate to adversarial review.
+7. Drop the copy-ready `AGENTS.md` overlay into the repo and fill in the six fields.
 
 ## Fast fill-in worksheet
 
@@ -21,6 +22,7 @@ SESSION_LOG_PATH=
 SPECIALIST_MAP=
 VERIFY_COMMANDS=
 QUALITY_THRESHOLD=
+HIGH_STAKES_RULE=
 ```
 
 ## Example
@@ -31,6 +33,7 @@ SESSION_LOG_PATH=docs/session_logs/
 SPECIALIST_MAP=Backend/code changes: use backend-reviewer + verifier; Docs changes: use docs-reviewer; Final verification: use verifier
 VERIFY_COMMANDS=pytest -q; ruff check .
 QUALITY_THRESHOLD=80
+HIGH_STAKES_RULE=release-critical behavior, security-sensitive changes, and correctness-sensitive simulation or data logic
 ```
 
 ## When to use the broader overlay instead
@@ -39,6 +42,8 @@ Use [workflow-integration-overlay.md](/Users/jacobbrown/Documents/GitHub/codex-m
 
 - the repo has unusual planning/reporting structure
 - the repo needs a more explicit agent-role mapping table
+- the repo needs default multi-agent review mappings by change type
+- the repo needs a scoped adversarial-review rule for high-stakes changes
 - the repo lacks `KNOWLEDGE_BASE.md` and `MEMORY.md`
 - the repo needs more detailed orchestration guidance
 

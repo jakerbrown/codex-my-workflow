@@ -3,7 +3,7 @@
 Use this kit when you want the same default Codex workflow across many repos
 without forcing each repo to adopt a full starter pack.
 
-## The five fields
+## The six fields
 
 Customize only these per repo:
 
@@ -12,6 +12,7 @@ Customize only these per repo:
 3. `SPECIALIST_MAP`
 4. `VERIFY_COMMANDS`
 5. `QUALITY_THRESHOLD`
+6. `HIGH_STAKES_RULE`
 
 ## What each field means
 
@@ -27,6 +28,9 @@ Customize only these per repo:
   - The narrowest standard verification commands for the repo.
 - `QUALITY_THRESHOLD`
   - The score or readiness threshold that counts as done for normal work.
+- `HIGH_STAKES_RULE`
+  - The repo-specific trigger for when normal specialist review should escalate
+    to adversarial review.
 
 ## Copy-ready root `AGENTS.md`
 
@@ -45,6 +49,7 @@ file explicitly says otherwise.
 - `SESSION_LOG_PATH`: [SESSION_LOG_PATH]
 - `VERIFY_COMMANDS`: [VERIFY_COMMANDS]
 - `QUALITY_THRESHOLD`: [QUALITY_THRESHOLD]
+- `HIGH_STAKES_RULE`: [HIGH_STAKES_RULE]
 
 ## Core operating mode
 
@@ -68,6 +73,16 @@ file explicitly says otherwise.
 ## Specialist defaults
 
 [SPECIALIST_MAP]
+
+- Default rule: when a non-trivial task matches more than one mapped reviewer,
+  use the relevant specialists as the default multi-agent review set.
+
+## Scoped adversarial-review rule
+
+- Escalate from the default specialist mapping to adversarial review only when:
+  - `[HIGH_STAKES_RULE]`
+- If adversarial review is skipped on a borderline change, explain the lighter
+  review path that replaced it.
 
 ## Verification defaults
 
@@ -105,6 +120,15 @@ Use a small block like this:
 - Final verification: use `[agent name or command suite]`
 ```
 
+## `HIGH_STAKES_RULE` snippet
+
+Use one sentence or a short list like this:
+
+```md
+release-critical behavior, correctness-sensitive simulation or data logic,
+security/privacy changes, or large architectural refactors
+```
+
 ## Optional supporting files
 
 If missing, add these lightweight files:
@@ -127,4 +151,6 @@ If you want standard semantics across repos, reuse:
 - Adding a second planning system when the repo already has one.
 - Replacing good local agents with generic names from another repo.
 - Using broad verification commands when a narrower repo-standard check exists.
+- Requiring adversarial review on routine changes that only need mapped
+  specialist review plus verification.
 - Making the overlay so detailed that it competes with the repo's own docs.
