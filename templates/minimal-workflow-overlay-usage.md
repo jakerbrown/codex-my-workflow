@@ -1,0 +1,48 @@
+# Minimal Workflow Overlay Usage
+
+Use [minimal-workflow-overlay-kit.md](/Users/jacobbrown/Documents/GitHub/codex-my-workflow/templates/minimal-workflow-overlay-kit.md) when rolling this workflow out across many repos.
+
+## Recommended rollout order
+
+For each repo:
+
+1. Find the repo's existing plan path.
+2. Find the repo's existing session-log or durable progress-note path.
+3. Identify the repo's default specialists or review commands.
+4. Identify the narrowest standard verification commands.
+5. Pick the quality threshold.
+6. Drop the copy-ready `AGENTS.md` overlay into the repo and fill in the five fields.
+
+## Fast fill-in worksheet
+
+```text
+PLAN_PATH=
+SESSION_LOG_PATH=
+SPECIALIST_MAP=
+VERIFY_COMMANDS=
+QUALITY_THRESHOLD=
+```
+
+## Example
+
+```text
+PLAN_PATH=docs/plans/
+SESSION_LOG_PATH=docs/session_logs/
+SPECIALIST_MAP=Backend/code changes: use backend-reviewer + verifier; Docs changes: use docs-reviewer; Final verification: use verifier
+VERIFY_COMMANDS=pytest -q; ruff check .
+QUALITY_THRESHOLD=80
+```
+
+## When to use the broader overlay instead
+
+Use [workflow-integration-overlay.md](/Users/jacobbrown/Documents/GitHub/codex-my-workflow/templates/workflow-integration-overlay.md) instead when:
+
+- the repo has unusual planning/reporting structure
+- the repo needs a more explicit agent-role mapping table
+- the repo lacks `KNOWLEDGE_BASE.md` and `MEMORY.md`
+- the repo needs more detailed orchestration guidance
+
+## Best practice
+
+Start with the minimal kit in every repo, then only graduate a repo to the
+broader overlay or starter pack if that repo proves it needs more structure.
