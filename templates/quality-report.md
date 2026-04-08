@@ -1,21 +1,39 @@
-# Quality Report: Merge to Main -- [Date]
+# Quality Report: [branch or task]
 
-## Summary
-[1-2 sentences: what was merged and why]
+- **Date:** YYYY-MM-DD
+- **Status:** PASS / CONDITIONAL PASS / FAIL
 
-## Files Modified
-| File | Type | Quality Score |
-|------|------|---|
-| `path/to/file` | [Code/Slides/Config] | [N]/100 |
+## Scope reviewed
 
-## Verification
-- [ ] Compilation/execution succeeds
-- [ ] Tolerance checks PASS (if applicable)
-- [ ] Tests pass (if applicable)
-- [ ] Quality gates >= 80
+- Files:
+- Artifact types:
+- Workflow stage:
 
-## Status
-MERGED
+## Verification summary
 
-## Notes
-[Any learnings or follow-ups]
+| Artifact | Check | Result | Notes |
+|----------|-------|--------|-------|
+| | | | |
+
+## Review summary
+
+| Dimension | Critical | Major | Minor | Notes |
+|-----------|----------|-------|-------|-------|
+| Visual/Layout | | | | |
+| Pedagogy | | | | |
+| Proofreading | | | | |
+| Substance | | | | |
+| Code / Reproducibility | | | | |
+| Parity / QA | | | | |
+
+## Quality score
+
+- Estimated score:
+- Threshold used:
+- Ready to commit / merge: yes/no
+
+## Remaining issues
+
+1.
+2.
+3.

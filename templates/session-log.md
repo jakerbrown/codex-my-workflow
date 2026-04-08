@@ -1,40 +1,36 @@
-# Session Log: [Date] -- [Brief Title]
+# Session Log: [short task title]
 
-**Status:** IN PROGRESS | COMPLETED
+- **Date:** YYYY-MM-DD
+- **Status:** ACTIVE / PAUSED / COMPLETED
 
-## Objective
-[What we set out to accomplish this session]
+## Current objective
 
-## Changes Made
+One short paragraph.
 
-| File | Change | Reason | Quality Score |
-|------|--------|--------|---|
-| `path/to/file` | [What changed] | [Why] | [N]/100 |
+## Timeline
 
-## Design Decisions
+### HH:MM — Plan approved
+- Summary:
+- Files in play:
+- Next step:
 
-| Decision | Alternatives Considered | Rationale |
-|----------|------------------------|-----------|
-| [Choice made] | [Other options] | [Why this one] |
+### HH:MM — Important decision
+- Decision:
+- Why:
+- Impact:
 
-## Incremental Work Log
+### HH:MM — Verification
+- Command or method:
+- Result:
+- Notes:
 
-**HH:MM UTC:** [event description]
+## Open questions / blockers
 
-## Learnings & Corrections
+- Item:
+- Needed to resolve:
 
-- [LEARN:category] What you learned for future reference
+## End-of-session summary
 
-## Verification Results
-
-| Check | Result | Status |
-|-------|--------|--------|
-| [What was checked] | [Result] | PASS / FAIL |
-
-## Open Questions / Blockers
-
-- [ ] [Question or blocker]
-
-## Next Steps
-
-- [ ] [What remains]
+- What changed:
+- What was verified:
+- Remaining work:
