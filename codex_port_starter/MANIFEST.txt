@@ -1,5 +1,6 @@
 # File manifest
 
+.agents/skills/README.md
 .agents/skills/qa-quarto/SKILL.md
 .agents/skills/qa-quarto/references/hard-gates.md
 .agents/skills/slide-excellence/SKILL.md

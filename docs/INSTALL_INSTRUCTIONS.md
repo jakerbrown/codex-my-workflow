@@ -1,6 +1,6 @@
 # Install Instructions
 
-Use these steps after cloning the original repository.
+Use these steps when you want another repository to adopt this workflow.
 
 ## 1. Copy the starter pack into the repo root
 
@@ -11,57 +11,86 @@ repository root:
 - `.codex/config.toml`
 - `.codex/hooks.json`
 - `.codex/agents/...`
-- `.agents/skills/...`
+- `KNOWLEDGE_BASE.md`
+- `MEMORY.md`
+- `quality_reports/plans/`
+- `quality_reports/session_logs/`
+- `.agents/skills/...` if you want repo-local skills
+
+## 2. Remove or keep only relevant nested guidance
+
+The starter includes example nested `AGENTS.md` files for common directory
+patterns such as:
+
+- `scripts/`
+- `explorations/`
+- `master_supporting_docs/`
+- `Slides/`
+- `Quarto/`
+
+Keep only the ones that match the target repo's actual structure.
+
+If the target repo is not slide-heavy, you can also remove the example skills:
+
+- `.agents/skills/slide-excellence/`
+- `.agents/skills/qa-quarto/`
+
+## 3. Tailor the root workflow files
+
+Edit these files for the target repo:
+
+- `AGENTS.md`
 - `KNOWLEDGE_BASE.md`
 - `MEMORY.md`
 
-Keep the original `.claude/` folder for reference while porting.
+Make the root guidance reflect the repo's own verification steps, review
+standards, and important conventions.
 
-## 2. Restart Codex
+## 4. Restart Codex
 
-Restart the Codex app or CLI after copying files. Skills, hooks, custom agents,
-and config are discovered at startup.
+Restart the Codex app or CLI after copying files. Hooks, custom agents, and
+config are discovered at startup.
 
-## 3. Trust the project
+## 5. Trust the project
 
 Repo-scoped `.codex/config.toml` is only loaded for trusted projects. Mark the
 repository as trusted in Codex.
 
-## 4. Validate instruction discovery
+## 6. Validate instruction discovery
 
 Run a prompt like:
 
 > List the `AGENTS.md` files you loaded for this working directory, then
-> summarize the active Codex skills and custom agents in this repo.
+> summarize the active custom agents and any repo-local skills in this repo.
 
 The expected guidance chain is:
 
 - root `AGENTS.md`
 - plus the nearest nested `AGENTS.md` for the current working directory, if any
 
-## 5. Validate skill discovery
+## 7. Validate skill discovery
 
-Ask Codex to list available repo skills or invoke them explicitly:
+If the repo has local skills, ask Codex to list them or invoke them explicitly.
 
-- `$slide-excellence`
-- `$qa-quarto`
+If it does not, that is fine. The starter still works with plans, logs,
+templates, and the root guidance alone.
 
-## 6. Validate hook setup
+## 8. Validate hook setup
 
 Hooks are experimental. A simple test is to restart Codex and confirm that the
 session-start context mentions recent plans or memory entries.
 
-## 7. Windows note
+## 9. Windows note
 
 Current documented Codex hooks are disabled on Windows. If you are running
 Codex natively on Windows, treat `.codex/hooks.json` as documentation for the
 workflow rather than an immediately active feature, or use a supported
 environment such as macOS / Linux / WSL for the hook-heavy parts.
 
-## 8. First real task
+## 10. First real task
 
 Once the files are installed, use a prompt like:
 
-> Read `AGENTS.md`, `docs/PORTING_MAP.md`, and `docs/CODEX_WORKFLOW.md`.
-> Compare the current `.claude/` folder to the Codex scaffolding and propose the
-> next smallest faithful porting step.
+> Read `AGENTS.md`, `KNOWLEDGE_BASE.md`, `MEMORY.md`, and
+> `docs/CODEX_WORKFLOW.md`. Propose the next smallest step to tailor this
+> workflow to the current repo and write a plan under `quality_reports/plans/`.

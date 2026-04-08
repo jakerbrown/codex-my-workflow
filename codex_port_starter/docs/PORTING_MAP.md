@@ -1,7 +1,7 @@
 # Porting Map
 
-This document maps the original Claude workflow structure to the Codex-first
-starter pack in this repository.
+This document is optional background for teams migrating from a Claude-style
+workflow. If your target repo is not coming from Claude, you can skip this file.
 
 ## Status legend
 

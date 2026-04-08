@@ -31,6 +31,27 @@ Context: Claude's `paths:`-scoped rule files do not have a direct Codex equivale
 Lesson: Codex guidance should be layered by directory using `AGENTS.md`.
 Action: Keep root guidance short and put folder-specific rules close to the relevant files.
 
+[LEARN] 2026-04-08 — Keep the starter generic, then specialize locally
+Context: This starter may be copied into many different project types.
+Lesson: Reusable workflow scaffolding should encode process and decision rules,
+not assumptions about one domain unless those assumptions are clearly marked as
+optional examples.
+Action: Put repo-specific practices in nested `AGENTS.md`, `KNOWLEDGE_BASE.md`,
+or repo-local skills after install.
+
+## User house style
+
+- Autonomy:
+  - Default to making reasonable assumptions and continuing unless a real fork
+    has non-obvious consequences.
+- Durability:
+  - Prefer on-disk plans, logs, and reports over chat-only reasoning.
+- Review standard:
+  - Treat verification and review as part of done, not optional polish.
+- Reusability:
+  - Capture repeatable repo conventions in this file or `KNOWLEDGE_BASE.md`
+    once they are learned.
+
 ## Retired lessons
 
 Move stale or superseded lessons here with a note explaining what replaced them.

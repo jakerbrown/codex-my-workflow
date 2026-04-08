@@ -1,26 +1,25 @@
 # Codex Workflow Guide
 
-This guide explains how to use the Codex starter pack as the working surface for
-a Codex-first mirror of the original Claude academic workflow.
+This guide explains how to use the starter pack as a reusable Codex workflow
+layer inside another repository.
 
-## 1. What this port is trying to preserve
+## 1. What this starter is trying to preserve
 
-The original workflow is valuable because it gives the model a disciplined
-operating pattern:
+The workflow is valuable because it gives the model a disciplined operating
+pattern:
 
 - plan before significant work
 - preserve context on disk
 - use specialists instead of one general reviewer
-- compare Quarto against Beamer with an adversarial critic/fixer cycle
 - gate completion on verification and quality thresholds
 
-This port keeps those outcomes, but uses Codex primitives:
+This starter keeps those outcomes, but uses Codex primitives:
 
 - layered `AGENTS.md`
 - `.codex/config.toml`
 - `.codex/hooks.json`
 - `.codex/agents/*.toml`
-- `.agents/skills/*`
+- optional `.agents/skills/*`
 - on-disk plans, logs, reports, knowledge base, and memory
 
 ## 2. Recommended runtime
@@ -28,8 +27,8 @@ This port keeps those outcomes, but uses Codex primitives:
 Use **Codex app** or **Codex CLI** as the main execution surface for repo work.
 
 Use regular chat for:
-- planning the next porting step
-- reviewing the structure
+- planning
+- reviewing structure
 - rewriting instructions
 - discussing tradeoffs
 
@@ -53,8 +52,8 @@ For any non-trivial task, Codex should:
 A good first prompt is:
 
 > Read the active `AGENTS.md` guidance, `MEMORY.md`, `KNOWLEDGE_BASE.md`, and
-> the latest plan. Then summarize the task, the likely files to change, the
-> verification steps, and the review strategy.
+> the latest plan. Then summarize this repo's workflow setup, the likely files
+> to tailor first, the verification steps, and the review strategy.
 
 ## 4. The contractor loop
 
@@ -76,36 +75,37 @@ Codex only spawns subagents when explicitly asked.
 
 That means the parent agent should say things like:
 
-> Spawn `slide-auditor`, `pedagogy-reviewer`, and `proofreader` in parallel on
-> `Quarto/Lecture3.qmd`. Keep them read-only. When all three return, write their
-> reports to `quality_reports/` and synthesize one combined summary.
+> Spawn the relevant reviewers in parallel on the files touched by this task.
+> Keep them read-only. When they return, write their findings to
+> `quality_reports/` and synthesize one combined summary.
 
 Use this pattern whenever the work is naturally separable and the added token
 cost is justified.
 
-## 6. Adversarial QA pattern
+## 6. Optional adversarial QA pattern
 
-The original repo's most distinctive pattern is the critic/fixer loop.
+Some domains benefit from a critic/fixer loop.
 
 In Codex, the workflow is:
 
-1. parent resolves the Beamer/Quarto pair
-2. parent explicitly spawns `quarto-critic`
-3. if critic rejects, parent explicitly spawns `quarto-fixer`
+1. parent completes an initial implementation pass
+2. parent explicitly spawns a critic
+3. if critic rejects, parent explicitly spawns a fixer
 4. parent re-runs the critic
 5. loop until `APPROVED` or the round limit is reached
 
-That pattern is encoded in the `qa-quarto` skill.
+Use this pattern for high-stakes parity or quality-sensitive work when a simple
+review pass is not enough.
 
 ## 7. Knowledge base maintenance
 
 Use `KNOWLEDGE_BASE.md` for things that should remain true across sessions:
 
-- notation
-- recurring examples
+- domain definitions
+- architecture decisions
+- naming conventions
+- recurring examples or patterns
 - design principles
-- lecture ordering
-- empirical mapping
 - known pitfalls
 
 Use `MEMORY.md` for workflow lessons such as:
@@ -121,14 +121,10 @@ A useful rule of thumb:
 
 ## 8. Directory-specific behavior
 
-The port uses nested `AGENTS.md` files instead of Claude `paths:` rule files.
+The starter uses nested `AGENTS.md` files instead of Claude `paths:` rules.
 
-### `Slides/`
-Beamer is authoritative. User-facing content edits should usually be mirrored to
-Quarto in the same task.
-
-### `Quarto/`
-Quarto is judged against Beamer. Fidelity matters more than improvisation.
+Only keep the nested guidance folders that match the target repo. Common
+patterns include:
 
 ### `scripts/`
 Use production-quality reproducible code. If uncertain, prototype in
@@ -139,7 +135,11 @@ Fast, lower-threshold sandbox. Document the result and then either graduate or
 archive it.
 
 ### `master_supporting_docs/`
-Read large PDFs selectively and keep evidence tracking explicit.
+Read large source documents selectively and keep evidence tracking explicit.
+
+### `Slides/` and `Quarto/`
+These are optional examples for slide-heavy repos. Remove them if they do not
+match the target project.
 
 ## 9. Quality thresholds
 
@@ -172,25 +172,26 @@ used to do.
 ## 11. Suggested prompts
 
 ### General repo initialization
-> Read `AGENTS.md`, `docs/PORTING_MAP.md`, and the existing `.claude/` folder.
-> Propose the next smallest faithful Codex porting step.
+> Read `AGENTS.md`, `KNOWLEDGE_BASE.md`, and `MEMORY.md`. Propose the next
+> smallest step to tailor this workflow to the current repo.
 
-### Full slide review
-> Use the `slide-excellence` skill on `Quarto/Lecture1_Topic.qmd`. Spawn the
-> specialist reviewers explicitly, save all reports under `quality_reports/`,
-> then give me one combined summary.
+### Implementation pass with durable state
+> Refresh the plan and session log for this task, implement the requested
+> change, verify it, then summarize what changed and what remains.
 
-### Adversarial Quarto QA
-> Use the `qa-quarto` skill for `Lecture2_Topic`. Treat Beamer as the benchmark,
-> loop until APPROVED or the round limit is reached, and write all round reports.
+### Parallel review
+> Spawn the relevant reviewers for the files changed in this task, keep them
+> read-only, save the findings under `quality_reports/`, and synthesize one
+> combined review summary.
 
-### Next-wave skill porting
-> Compare `.claude/skills/proofread` to this Codex starter pack. Draft a Codex
-> repo skill that matches the original intent but uses Codex-native conventions.
+### Repo-local workflow extraction
+> Turn this repeated process into a repo-local skill under `.agents/skills/`
+> and document when it should be used.
 
 ## 12. When to consider an external orchestrator
 
-Most of the value can be captured with native Codex guidance + skills.
+Most of the value can be captured with native Codex guidance, plans, logs, and
+optionally repo-local skills.
 
 Consider adding an external orchestrator only if you need:
 
