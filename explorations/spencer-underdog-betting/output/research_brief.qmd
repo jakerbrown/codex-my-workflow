@@ -1,0 +1,92 @@
+---
+title: "Early-Season Underdogs"
+subtitle: "A public-data audit of Spencer's betting theory"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    transition: fade
+---
+
+## Question
+
+- Does betting every early-season underdog at closing moneyline odds make money?
+- Sample: NFL, NBA, NHL, MLB from 2011 through 2021.
+- Standard: public, reproducible, uncertainty-aware.
+
+## Why This Could Work
+
+- Preseason priors can be stale.
+- Sportsbooks and bettors may update slowly after only a few games.
+- Small probability mistakes matter more for underdogs because payouts are asymmetric.
+
+## Data and Design
+
+- Public sportsbook archive snapshots from a documented GitHub repository.
+- 53,453 cleaned games across 44 league-seasons.
+- Main windows:
+  - first 2 weeks
+  - first 3 weeks
+  - first 5 games
+  - first 10 percent of the team-season proxy
+- Primary stake: $100 flat bet on every qualifying underdog.
+
+## What Would Count as Evidence
+
+- Positive ROI after vig matters, but it is not enough on its own.
+- Beating all-season underdogs is suggestive.
+- The sharper test is calibration:
+  - did underdogs win more often than the no-vig market implied?
+- An interval spanning losses and gains means the strategy is not established as a reliable edge.
+
+## Pipeline
+
+```{mermaid}
+flowchart TD
+    A["Public sportsbook archives"] --> B["Alias cleaning and harmonization"]
+    B --> C["Game panel and side-bet expansion"]
+    C --> D["ROI, benchmarks, season-proxy checks"]
+    C --> E["Calibration, shrinkage, simulation"]
+```
+
+## Headline Results
+
+| Rule | ROI | Bets |
+|---|---:|---:|
+| Underdogs, first 3 weeks | -0.4% | 5,901 |
+| All underdogs, likely-regular-season proxy | -1.8% | 49,850 |
+| Favorites, first 3 weeks | -4.1% | 5,900 |
+
+95% bootstrap interval for the headline rule: `[-4.0%, 3.4%]`.
+
+Reading rule: the estimate is near breakeven, and the interval still includes meaningful losses and modest gains.
+
+## League Split
+
+| League | ROI | Read |
+|---|---:|---|
+| MLB | +3.9% | positive hint |
+| NFL | +1.8% | noisy hint |
+| NBA | -0.4% | near zero |
+| NHL | -8.2% | negative |
+
+Partial pooling shrinks the split back toward a slightly negative pooled mean.
+
+## Calibration Evidence
+
+- Early 3-week underdogs:
+  - realized win rate: 40.45%
+  - no-vig implied win probability: 39.70%
+  - calibration gap: +0.75 percentage points
+- Interpretation:
+  - some mild early underpricing may be present
+  - the gap is too small to support a robust cross-league profit claim after vig
+
+## Bottom Line
+
+- Early underdogs slightly outperform their own implied probabilities.
+- The effect is too small and unstable to call a durable cross-league edge.
+- Best reading:
+  - weak support for mild early mispricing
+  - strongest in MLB and maybe NFL
+  - no credible all-league profit claim

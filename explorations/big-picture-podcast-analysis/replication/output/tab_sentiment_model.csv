@@ -1,0 +1,13 @@
+term,estimate,std.error,statistic,p.value
+(Intercept),1.7661,0.6782,2.6041,0.0096
+as.numeric(episode_date),-1e-4,0,-2.3642,0.0187
+industry_share,-0.6773,0.1348,-5.0234,0
+positive_phrase_rate,2.2904,0.1588,14.4205,0
+negative_phrase_rate,-1.128,0.3176,-3.5514,4e-4
+factor(episode_type)interview,0.124,0.0498,2.493,0.0132
+factor(episode_type)mailbag,0.2158,0.0629,3.4328,7e-4
+factor(episode_type)oscar,0.192,0.0461,4.1687,0
+factor(episode_type)ranking,0.1086,0.0412,2.6364,0.0088
+factor(episode_type)retrospective,0.1614,0.1047,1.5414,0.1242
+factor(episode_type)standard,0.135,0.0389,3.4657,6e-4
+oscar_windowTRUE,0.036,0.0273,1.3153,0.1893

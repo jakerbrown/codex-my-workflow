@@ -24,7 +24,7 @@ close to Roth across multiple dimensions, not just one.
 So I built a constrained but honest corpus and measured it.
 
 If you want the replication materials, code, intermediate outputs, and notes,
-they live here: [replication folder for this analysis](https://github.com/jakerbrown/claude-code-my-workflow/tree/main/explorations/philip-roth-author-similarity).
+they live here: [replication folder for this analysis](https://github.com/jakerbrown/codex-my-workflow/tree/main/explorations/philip-roth-author-similarity).
 The key scripts are `src/run_pipeline.py`, which downloads the source pages and
 builds the corpus, and `src/make_figures.py`, which generates the figures.
 
@@ -258,4 +258,4 @@ That is a more interesting answer than "critics say X," and, within the limits
 of the corpus and the checks I actually ran, a more trustworthy one.
 
 Replication materials for the full pipeline, figures, and intermediate outputs
-are available here: [replication folder for this analysis](https://github.com/jakerbrown/claude-code-my-workflow/tree/main/explorations/philip-roth-author-similarity).
+are available here: [replication folder for this analysis](https://github.com/jakerbrown/codex-my-workflow/tree/main/explorations/philip-roth-author-similarity).

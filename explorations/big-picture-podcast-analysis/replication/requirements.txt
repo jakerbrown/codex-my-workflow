@@ -1,0 +1,8 @@
+# No Python package stack is required for the current replication path.
+# Runtime assumptions:
+# - R >= 4.3
+# - Quarto CLI
+# - curl
+# - R packages used in src/run_analysis.R (dplyr, readr, stringr, purrr,
+#   tidyr, tibble, lubridate, rvest, xml2, tidytext, ggplot2, forcats,
+#   scales, ggrepel, glmnet, broom)

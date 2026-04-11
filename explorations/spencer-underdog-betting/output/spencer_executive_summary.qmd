@@ -1,0 +1,152 @@
+---
+title: "Executive Summary for Spencer"
+subtitle: "Did early-season underdog betting historically make money?"
+author: "Codex"
+date: "2026-04-09"
+format:
+  pdf:
+    papersize: letter
+    toc: false
+    fontsize: 11pt
+---
+
+## Bottom line
+
+Your idea was plausible, and the data suggest it was directionally smarter than
+betting underdogs indiscriminately all year. But the evidence does **not**
+support a strong claim that betting early-season underdogs was a robust,
+cross-league money-making strategy.
+
+My shortest honest summary is:
+
+- weak support for a small early informational effect
+- strongest hints in MLB and maybe NFL
+- no credible all-league betting edge
+- too much uncertainty to recommend strong belief in a durable profit strategy
+
+## What I tested
+
+I built a public-data panel using closing moneyline archives for:
+
+- NFL
+- NBA
+- NHL
+- MLB
+
+Sample:
+
+- seasons `2011-2021`
+- `53,453` cleaned games
+- `44` league-seasons
+
+Main strategy:
+
+- bet `$100` on every underdog
+- focus on the first part of the season
+- compare first 2 weeks, first 3 weeks, first 5 games, and first 10% of the
+  season proxy
+
+Benchmarks:
+
+- all underdogs over the likely-regular-season proxy
+- early favorites
+- random teams
+- later-season underdogs
+- timing-placebo benchmarks
+
+## Main result
+
+The best naive pooled rule was:
+
+- bet every underdog in the first 3 calendar weeks
+
+That result was:
+
+- ROI: `-0.4%`
+- bets: `5,901`
+- 95% bootstrap interval: `[-4.0%, 3.4%]`
+
+Interpretation:
+
+- basically breakeven
+- better than generic underdog betting
+- not precise enough to call a real proven edge
+
+## Relative performance
+
+Compared with the headline rule:
+
+- all underdogs over the likely-regular-season proxy lost `1.8%`
+- early favorites lost `4.1%`
+- random teams in the same window also did worse on average
+
+So your idea did beat some natural baselines. The problem is that the
+improvement was too small to turn into a clean, robust profit story after vig.
+
+## League split
+
+Early 3-week underdog ROI by league:
+
+- MLB: `+3.9%`
+- NFL: `+1.8%`
+- NBA: `-0.4%`
+- NHL: `-8.2%`
+
+Best interpretation:
+
+- MLB looks most interesting
+- NFL is suggestive but noisy
+- NBA is basically flat
+- NHL looks bad for this strategy
+
+I would treat the MLB and NFL positives as hints, not conclusions.
+
+## Why the result is still interesting
+
+The strategy was not obviously nonsense. Early underdogs did win **slightly**
+more often than their no-vig implied probabilities suggested.
+
+For pooled early 3-week underdogs:
+
+- realized win rate: `40.45%`
+- no-vig implied win probability: `39.70%`
+- calibration gap: `+0.75` percentage points
+
+That is consistent with a mild early-season informational effect. It is just
+not large enough to create a strong, stable return once bookmaker hold and
+noise are accounted for.
+
+## The one tempting refinement
+
+Bigger underdogs in the first 3 weeks looked better:
+
+- `big_dog_3w`: ROI `+4.2%`
+
+But I would not lean on that. It is exactly the kind of in-sample refinement
+that can look good by chance when you test multiple plausible variants.
+
+## Recommendation
+
+If you want the clean takeaway:
+
+- **As a serious historical claim:** probably no robust edge.
+- **As a research idea:** worthwhile, because it seems better than naive
+  underdog betting and may capture a small early market-learning effect.
+- **As a betting system I would trust without hesitation:** no.
+
+## Important caveats
+
+- The cleanest common public archive I found ends in `2021`.
+- Full-season comparisons use a conservative archive-derived regular-season
+  proxy rather than an official harmonized season-type flag.
+- The simulation extension is interpretive, not direct evidence.
+
+## Files
+
+Full report:
+
+- `spencer_report.pdf`
+
+Replication and project materials:
+
+- `explorations/spencer-underdog-betting/replication/`
